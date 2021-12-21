@@ -60,8 +60,13 @@ func packOne(dst, lit []byte, value byte, repeat int, flush bool) (out []byte, c
 
 // Pack compresses the data using the PackBits compression scheme.
 func Pack(data []byte) []byte {
+	return AppendPack(nil, data)
+}
+
+// AppendPack compresses the data using the PackBits compression scheme,
+// appending the compressed data to the given slice.
+func AppendPack(out, data []byte) []byte {
 	const maxRun = 128
-	var out []byte
 	// Loop invariants:
 	// - lstart <= rstart <= i
 	// - data[start:] has not been packed
